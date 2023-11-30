@@ -3,7 +3,7 @@ export async function getVideo(previewCanvas) {
     video: true,
   });
 
-  const video = document.createElement("video");
+  const video = document.createElement('video');
   try {
     // modern browsers
     video.srcObject = avStream;
@@ -13,7 +13,7 @@ export async function getVideo(previewCanvas) {
   }
 
   if (previewCanvas) {
-    video.addEventListener("canplay", () => {
+    video.addEventListener('canplay', () => {
       drawPreview(video, previewCanvas);
     });
   }
@@ -23,23 +23,12 @@ export async function getVideo(previewCanvas) {
 }
 
 export function drawVideo(video, canvas) {
-  const context = canvas.getContext("2d");
+  const context = canvas.getContext('2d');
   context.drawImage(video, 0, 0, canvas.width, canvas.height);
 }
 
 export function drawPreview(video, canvas) {
-  const context = canvas.getContext("2d");
-  setInterval(() => {
-    context.drawImage(
-      video,
-      0,
-      0,
-      video.videoWidth,
-      video.videoHeight,
-      0,
-      0,
-      canvas.width,
-      canvas.height,
-    );
-  }, 16);
+  const context = canvas.getContext('2d');
+  context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, canvas.width, canvas.height);
+  requestAnimationFrame(() => drawPreview(video, canvas));
 }
